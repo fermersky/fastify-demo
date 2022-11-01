@@ -1,3 +1,4 @@
+import "dotenv/config";
 import assert from "node:assert";
 
 const CONFIG_KEY = "config";
@@ -17,6 +18,9 @@ const confSchema = {
     JWT_SECRET: {
       type: "string",
       default: "secret",
+    },
+    CORS_ORIGINS: {
+      type: "string",
     },
   },
 };

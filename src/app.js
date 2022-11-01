@@ -1,7 +1,8 @@
 import Fastify from "fastify";
 import fp from "fastify-plugin";
 import Env from "@fastify/env";
-import auth from "./auth/auth.js";
+import Cors from "@fastify/cors";
+import auth from "./api/auth/auth.js";
 
 import testing_core from "./core/testing.js";
 import default_core from "./core/default.js";
@@ -26,6 +27,10 @@ const build = async (options) => {
 
   // Initialize fastify.settings from the .env file
   app.register(Env, options.env);
+
+  // CORS
+  const origin = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(",") : false;
+  app.register(Cors, { credentials: true, origin });
 
   // Inject core module
   app.register(fp(modeToModule[options.mode]), { name: "core" });
