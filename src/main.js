@@ -1,8 +1,8 @@
 import build from "./app.js";
-import { dotenv } from "./env.js";
+import settings from "./settings.js";
 
 const start = async () => {
-  const app = await build(dotenv);
+  const app = await build(settings.dotenv);
 
   try {
     app.listen({ port: process.env.PORT });

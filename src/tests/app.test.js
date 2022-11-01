@@ -1,13 +1,13 @@
 import assert from "node:assert";
 import { it, describe, beforeEach } from "node:test";
 import build from "../app.js";
-import { test } from "../env.js";
+import settings from "../settings.js";
 
 describe("AUTH ROUTE", () => {
   let app;
 
   beforeEach(async () => {
-    app = await build(test);
+    app = await build(settings.test);
   });
 
   it("/auth/login", async () => {
