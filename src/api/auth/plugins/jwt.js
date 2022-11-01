@@ -21,8 +21,8 @@ export default async function jwt(fastify, options) {
 
   validateJWTSecret(secret);
 
-  const sign = (payload, options) => jsonwebtoken.sign(payload, secret, options);
-  const verify = (token, options) => jsonwebtoken.verify(token, secret, options);
+  const sign = (payload, opts) => jsonwebtoken.sign(payload, secret, opts);
+  const verify = (token, opts) => jsonwebtoken.verify(token, secret, opts);
 
   fastify.decorate("jwt", {
     sign,

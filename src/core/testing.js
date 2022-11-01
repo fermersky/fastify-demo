@@ -4,6 +4,6 @@ class PostgresClientMock {
   }
 }
 
-export default async function (fastify, options) {
+export default async function testingModule(fastify, options) {
   fastify.decorate("pg", new PostgresClientMock());
 }

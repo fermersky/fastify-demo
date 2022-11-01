@@ -4,6 +4,6 @@ class PostgresClient {
   }
 }
 
-export default async function (fastify, options) {
+export default async function defaultModule(fastify, options) {
   fastify.decorate("pg", new PostgresClient());
 }

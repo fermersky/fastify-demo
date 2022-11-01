@@ -4,9 +4,10 @@ import Env from "@fastify/env";
 import Cors from "@fastify/cors";
 import auth from "./api/auth/auth.js";
 
-import testing_core from "./core/testing.js";
-import default_core from "./core/default.js";
+import testingCore from "./core/testing.js";
+import defaultCore from "./core/default.js";
 
+// eslint-disable-next-line no-unused-vars
 import { AppSettings } from "./settings.js";
 
 /**
@@ -21,8 +22,8 @@ const build = async (options) => {
   });
 
   const modeToModule = {
-    testing: testing_core,
-    default: default_core,
+    testing: testingCore,
+    default: defaultCore,
   };
 
   // Initialize fastify.settings from the .env file

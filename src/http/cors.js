@@ -1,5 +1,5 @@
-export default async function (fastify, options) {
-  fastify.addHook("onRequest", function (req, reply, next) {
+export default async function cors(fastify, options) {
+  fastify.addHook("onRequest", (req, reply, next) => {
     reply.header("Access-Control-Allow-Credentials", "true");
     next();
   });
