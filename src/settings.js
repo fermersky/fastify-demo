@@ -1,5 +1,6 @@
-import "dotenv/config";
 import assert from "node:assert";
+
+import "dotenv/config";
 
 const CONFIG_KEY = "config";
 

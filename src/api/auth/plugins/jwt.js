@@ -1,5 +1,6 @@
-import jsonwebtoken from "jsonwebtoken";
 import assert from "node:assert";
+
+import jsonwebtoken from "jsonwebtoken";
 
 function validateJWTSecret(secret) {
   assert.ok(secret, "secret is undefined");

@@ -1,5 +1,6 @@
 import assert from "node:assert";
-import { it, describe, beforeEach } from "node:test";
+import { beforeEach, describe, it } from "node:test";
+
 import build from "../app.js";
 import settings from "../settings.js";
 

@@ -1,7 +1,8 @@
 import fp from "fastify-plugin";
+
 import jwt from "./plugins/jwt.js";
 
-export default async function (fastify, options) {
+export default async function auth(fastify, options) {
   fastify.register(fp(jwt), { secret: fastify.config.JWT_SECRET });
 
   const opts = {

@@ -1,12 +1,11 @@
+import Cors from "@fastify/cors";
+import Env from "@fastify/env";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
-import Env from "@fastify/env";
-import Cors from "@fastify/cors";
+
 import auth from "./api/auth/auth.js";
-
-import testingCore from "./core/testing.js";
 import defaultCore from "./core/default.js";
-
+import testingCore from "./core/testing.js";
 // eslint-disable-next-line no-unused-vars
 import { AppSettings } from "./settings.js";
 

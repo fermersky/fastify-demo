@@ -10,11 +10,12 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    quotes: [2, "double", { avoidEscape: true }],
+    quotes: ["error", "double", { avoidEscape: true }],
     "linebreak-style": ["error", "windows"],
     "no-console": "off",
     "import/extensions": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "class-methods-use-this": "off",
+    "import/no-unresolved": ["warn", { ignore: ["^node:test$"] }],
   },
 };
