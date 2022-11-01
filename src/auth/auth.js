@@ -1,5 +1,9 @@
-async function auth(fastify, options) {
-  console.log(fastify.jwt);
+import jwt from "./plugins/jwt.js";
+
+import fp from "fastify-plugin";
+
+export default async function (fastify, options) {
+  fastify.register(fp(jwt));
 
   const opts = {
     schema: {
@@ -24,7 +28,10 @@ async function auth(fastify, options) {
     const { email, password } = request.body;
     console.log({ email, password });
 
-    return { token: "<jwt token>" };
+    await fastify.pg.query("select * from users");
+
+    const token = fastify.jwt.sign({});
+
+    return { token };
   });
 }
-export default auth;

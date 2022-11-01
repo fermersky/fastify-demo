@@ -1,18 +1,22 @@
 import Fastify from "fastify";
 import fp from "fastify-plugin";
+import Env from "@fastify/env";
+import auth from "./auth/auth.js";
 
-import auth from "./routes/auth.js";
-import jwt from "./plugins/jwt.js";
+const build = async (options) => {
+  const app = Fastify({
+    logger: options.logger,
+  });
 
-const app = Fastify({
-  logger: true,
-});
+  app.register(Env, options.env);
 
-app.register(fp(jwt));
-app.register(auth, { prefix: "/auth" });
+  const core = await import(`./core/${options.mode}.js`);
 
-app.get("/", async (request, response) => {
-  return { status: "ok" };
-});
+  app.register(fp(core), { name: "core" });
 
-export default app;
+  app.register(auth, { prefix: "auth" });
+
+  return app;
+};
+
+export default build;

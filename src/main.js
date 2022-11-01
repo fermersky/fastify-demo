@@ -1,8 +1,11 @@
-import app from "./app.js";
+import build from "./app.js";
+import { dotenv } from "./env.js";
 
 const start = async () => {
+  const app = await build(dotenv);
+
   try {
-    await app.listen({ port: 5000 });
+    app.listen({ port: process.env.PORT });
   } catch (err) {
     app.log.error(err);
 
