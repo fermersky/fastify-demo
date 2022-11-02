@@ -1,12 +1,20 @@
-import assert from "node:assert";
-
 import "dotenv/config";
+import { Validator } from "jsonschema";
 
 const CONFIG_KEY = "config";
 
 const confSchema = {
   type: "object",
-  required: ["PORT", "ENV", "JWT_SECRET"],
+  required: [
+    "PORT",
+    "ENV",
+    "JWT_SECRET",
+    "POSTGRES_HOST",
+    "POSTGRES_PORT",
+    "POSTGRES_USER",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_DATABASE",
+  ],
   properties: {
     PORT: {
       type: "string",
@@ -23,6 +31,21 @@ const confSchema = {
     CORS_ORIGINS: {
       type: "string",
     },
+    POSTGRES_HOST: {
+      type: "string",
+    },
+    POSTGRES_PORT: {
+      type: "string",
+    },
+    POSTGRES_USER: {
+      type: "string",
+    },
+    POSTGRES_PASSWORD: {
+      type: "string",
+    },
+    POSTGRES_DATABASE: {
+      type: "string",
+    },
   },
 };
 
@@ -34,13 +57,34 @@ export class AppSettings {
    * @param {object} env
    */
   constructor(logger, mode, env) {
-    // validation
-    assert.equal(typeof logger, "boolean", "logger must be a boolean");
-    assert.ok(["default", "testing"].includes(mode), "mode must be either default or testing");
+    this.#validate(logger, mode, env);
 
     this.logger = logger;
     this.mode = mode;
     this.env = env;
+  }
+
+  #validate(logger, mode, env) {
+    const v = new Validator();
+
+    const schema = {
+      type: "object",
+      required: ["logger", "mode", "env"],
+      properties: {
+        logger: {
+          type: ["boolean", "object"],
+        },
+        mode: {
+          type: "string",
+          enum: ["default", "testing"],
+        },
+        env: {
+          type: "object",
+        },
+      },
+    };
+
+    v.validate({ logger, mode, env }, schema, { throwFirst: true });
   }
 }
 
@@ -55,6 +99,7 @@ export default {
     schema: confSchema,
     data: {
       ENV: "testing",
+      POSTGRES_DATABASE: "test",
     },
     dotenv: true,
   }),

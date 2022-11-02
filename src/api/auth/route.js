@@ -26,11 +26,19 @@ export default async function auth(fastify, options) {
   };
   fastify.post("/login", opts, async (request, response) => {
     const { email, password } = request.body;
-    console.log({ email, password });
 
-    await fastify.pg.query("select * from users");
+    const driver = await fastify.driver_service.getOneByEmail(email);
 
-    const token = fastify.jwt.sign({});
+    if (!driver) {
+      response.status(401).send({ detail: "email or password is wrong" });
+    }
+    const correctPassword = await fastify.crypto.compare(password, driver.password);
+
+    if (!correctPassword) {
+      response.status(401).send({ detail: "email or password is wrong" });
+    }
+
+    const token = await fastify.jwt.sign({ email });
 
     return { token };
   });

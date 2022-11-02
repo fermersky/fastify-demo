@@ -17,5 +17,7 @@ module.exports = {
     "no-unused-vars": "off",
     "class-methods-use-this": "off",
     "import/no-unresolved": ["warn", { ignore: ["^node:test$"] }],
+    "object-curly-newline": "off",
+    "max-classes-per-file": "off",
   },
 };

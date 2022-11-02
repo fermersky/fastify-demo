@@ -1,4 +1,5 @@
 import assert from "node:assert";
+import { promisify } from "node:util";
 
 import jsonwebtoken from "jsonwebtoken";
 
@@ -22,8 +23,17 @@ export default async function jwt(fastify, options) {
 
   validateJWTSecret(secret);
 
-  const sign = (payload, opts) => jsonwebtoken.sign(payload, secret, opts);
-  const verify = (token, opts) => jsonwebtoken.verify(token, secret, opts);
+  const sign = (payload, opts) => {
+    const fn = promisify(jsonwebtoken.sign);
+
+    return fn(payload, secret, opts);
+  };
+
+  const verify = (token, opts) => {
+    const fn = promisify(jsonwebtoken.verify);
+
+    return fn(token, secret, opts);
+  };
 
   fastify.decorate("jwt", {
     sign,

@@ -3,11 +3,11 @@ import Env from "@fastify/env";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
 
-import auth from "./api/auth/auth.js";
+import auth from "./api/auth/route.js";
 import defaultCore from "./core/default.js";
 import testingCore from "./core/testing.js";
-// eslint-disable-next-line no-unused-vars
 import { AppSettings } from "./settings.js";
+import shared from "./shared/shared.js";
 
 /**
  * Initializes fastify app
@@ -25,7 +25,7 @@ const build = async (options) => {
     default: defaultCore,
   };
 
-  // Initialize fastify.settings from the .env file
+  // Initialize fastify.config from the .env file
   app.register(Env, options.env);
 
   // CORS
@@ -34,6 +34,9 @@ const build = async (options) => {
 
   // Inject core module
   app.register(fp(modeToModule[options.mode]), { name: "core" });
+
+  // Inject shared module
+  app.register(fp(shared));
 
   // routes...
   app.register(auth, { prefix: "auth" });
