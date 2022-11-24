@@ -11,7 +11,6 @@ module.exports = {
   },
   rules: {
     quotes: ["error", "double", { avoidEscape: true }],
-    "linebreak-style": ["error", "windows"],
     "no-console": "off",
     "import/extensions": "off",
     "no-unused-vars": "off",
